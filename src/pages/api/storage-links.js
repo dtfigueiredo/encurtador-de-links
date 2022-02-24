@@ -1,9 +1,10 @@
 // buscar links salvos
 export const getSavedLinks = async (key) => {
-  const myLinks = await localStorage.getItem(key)
+  let myLinks = await localStorage.getItem(key)
   let savedLinks = JSON.parse(myLinks) || []
   return savedLinks
 }
+
 
 // salvar links no storage
 export const saveNewLink = async (key, newlink) => {
@@ -21,8 +22,11 @@ export const saveNewLink = async (key, newlink) => {
 }
 
 // deletar links
-export const deleteSavedLinks = async (key) => {
-  let storedLinks = await getSavedLinks(key)
-  storedLinks.map((link) => link.id !== newlink.id)
-  return storedLinks
+export const deleteSavedLinks = async (linksList, linkId) => {
+
+  let myLinks = linksList.filter((link) => link.id !== linkId)
+
+  localStorage.setItem('@LinksEncurtados', JSON.stringify(myLinks))
+
+  return myLinks
 }
